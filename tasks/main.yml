@@ -104,6 +104,7 @@
   notify: restart ssh
   tags:
     - aad_ssh
+    - aad_sssd
 
 - meta: flush_handlers
 
