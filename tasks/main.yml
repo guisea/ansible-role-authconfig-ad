@@ -5,11 +5,13 @@
   when: ansible_lsb.description is defined
   tags:
     - aad_adjoin
+    - aad_sssd
 - set_fact:
     distro: "{{ansible_distribution}}-{{ansible_distribution_major_version}}"
   when: ansible_lsb.description is undefined
   tags:
     - aad_adjoin
+    - aad_sssd
 
 # load version-specific variables
 - block:
@@ -18,6 +20,9 @@
         - "../vars/{{distro}}.yml"
   rescue:
     - fail: msg="Variables file for distro {{ distro }} were not found."
+  tags:
+    - aad_adjoin
+    - aad_sssd    
 
 - include: redhat.yml
   when: ansible_distribution == 'Redhat' or ansible_distribution == 'CentOS' or ansible_distribution == "Amazon"
@@ -36,6 +41,7 @@
     backup: yes
   tags:
     - aad_krb5_conf
+    - aad_sssd
 
 - name: sssd.conf
   template:
@@ -48,6 +54,7 @@
   notify: restart sssd
   tags:
     - aad_sssd_conf
+    - aad_sssd
 
 #- name: access.conf
 #  template:
@@ -67,6 +74,7 @@
   notify: restart ssh
   tags:
     - aad_ssh
+    - aad_sssd
 
 - name: Update sshd_config for legal thing
   lineinfile:
@@ -76,6 +84,7 @@
   notify: restart ssh
   tags:
     - aad_ssh
+    - aad_sssd
 
 - name: Update sshd_config to allow PasswordAuthentication
   lineinfile:
@@ -85,6 +94,7 @@
   notify: restart ssh
   tags:
     - aad_ssh
+    - aad_sssd
 
 - meta: flush_handlers
 
