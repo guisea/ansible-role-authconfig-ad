@@ -41,7 +41,7 @@
     name: messagebus
     enabled: yes
     state: restarted
-  when: ansible_distribution == 'Amazon'
+  when: ansible_distribution == 'Amazon' or ansible_os_family == 'RedHat'
 
 - name: restart dbus
   service:
