@@ -1,0 +1,14 @@
+---
+# Cent/EL6-specific variables
+authconfig_packages:
+  - 'adcli'
+  - 'sssd' 
+  - 'oddjob'
+  - 'oddjob-mkhomedir'
+  - 'krb5-workstation'
+  - 'nss-pam-ldapd'
+  - 'pam_krb5'
+  - 'authconfig'
+  - 'samba-common'
+  - 'nscd'
+
