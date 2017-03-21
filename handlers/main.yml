@@ -48,8 +48,14 @@
     name: dbus
     enabled: yes
     state: restarted
-  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Redhat' or ansible_distribution == 'CentOS'
+  when: ansible_distribution == 'Ubuntu'
 
+- name: restart systemd-logind
+  service:
+    name: systemd-logind
+    enabled: yes
+    state: restarted
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
 
 - name: restart oddjob
   service:
@@ -62,7 +68,7 @@
     name: sshd
     enabled: yes
     state: restarted
-  when: ansible_distribution == 'Redhat' or ansible_distribution == 'CentOS' or ansible_distribution == 'Amazon'
+  when: ansible_os_family == 'RedHat' or ansible_distribution == 'Amazon'
 
 - name: restart ssh
   service:
