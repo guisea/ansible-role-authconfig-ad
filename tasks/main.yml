@@ -2,13 +2,13 @@
 # tasks file for authconfig
 - set_fact:
     distro: "{{ansible_lsb.id}}-{{ansible_lsb.major_release}}"
-  when: ansible_lsb.description is defined
+  when: ansible_lsb is defined
   tags:
     - aad_adjoin
     - aad_sssd
 - set_fact:
     distro: "{{ansible_distribution}}-{{ansible_distribution_major_version}}"
-  when: ansible_lsb.description is undefined
+  when: ansible_lsb is undefined
   tags:
     - aad_adjoin
     - aad_sssd
