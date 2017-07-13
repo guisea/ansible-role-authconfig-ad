@@ -48,7 +48,7 @@
     name: dbus
     enabled: yes
     state: restarted
-  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Redhat' or ansible_distribution == 'CentOS'
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'RedHat' or ansible_distribution == "CentOS"
 
 
 - name: restart oddjob
@@ -62,7 +62,7 @@
     name: sshd
     enabled: yes
     state: restarted
-  when: ansible_distribution == 'Redhat' or ansible_distribution == 'CentOS' or ansible_distribution == 'Amazon'
+  when: ansible_os_family == 'RedHat'
 
 - name: restart ssh
   service:
