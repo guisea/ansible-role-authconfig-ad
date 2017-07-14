@@ -1,6 +1,9 @@
 ---
 # tasks file for authconfig
 - set_fact:
+    ansible_distribution_major_version=6
+  when: ansible_ditribution == "Amazon"
+- set_fact:
     distro: "{{ansible_os_family}}-{{ansible_distribution_major_version}}"
   tags:
     - aad_adjoin

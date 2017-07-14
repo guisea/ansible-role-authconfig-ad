@@ -36,19 +36,21 @@
     enabled: yes
     state: restarted
 
+# messagebus for Cent/RedHat/Amazon
 - name: restart dbus
   service:
     name: messagebus
     enabled: yes
     state: restarted
-  when: ansible_distribution == 'Amazon'
+  when: distro == 'RedHat-6'
 
+# Service is dbus for Cent/RedHat 7
 - name: restart dbus
   service:
     name: dbus
     enabled: yes
     state: restarted
-  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'RedHat' or ansible_distribution == "CentOS"
+  when: ansible_distribution == 'Ubuntu' or distro == 'RedHat-7'
 
 
 - name: restart oddjob
