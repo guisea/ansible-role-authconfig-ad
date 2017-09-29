@@ -1,17 +1,26 @@
 ---
 # tasks file for authconfig
 - set_fact:
-    distro: "{{ansible_lsb.id}}-{{ansible_lsb.major_release}}"
-  when: ansible_lsb.description is defined
-  tags:
-    - aad_adjoin
-    - aad_sssd
+    ansible_distribution_major_version=6
+  when: ansible_distribution == "Amazon"
 - set_fact:
-    distro: "{{ansible_distribution}}-{{ansible_distribution_major_version}}"
-  when: ansible_lsb.description is undefined
+    distro: "{{ansible_os_family}}-{{ansible_distribution_major_version}}"
   tags:
     - aad_adjoin
     - aad_sssd
+
+# - set_fact:
+#    distro: "{{ansible_lsb.id}}-{{ansible_lsb.major_release}}"
+#  when: ansible_lsb.description is defined
+#  tags:
+#    - aad_adjoin
+#    - aad_sssd
+#- set_fact:
+#    distro: "{{ansible_distribution}}-{{ansible_distribution_major_version}}"
+#  when: ansible_lsb.description is undefined
+#  tags:
+#    - aad_adjoin
+#    - aad_sssd
 
 # load version-specific variables
 - block:
