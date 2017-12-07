@@ -66,6 +66,12 @@
     state: restarted
   when: ansible_os_family == 'RedHat'
 
+- name: restart logind
+  service: systemd-logind
+    enabled: yes
+    state: restarted
+  when: distro == 'RedHat-7'
+
 - name: restart ssh
   service:
     name: ssh
