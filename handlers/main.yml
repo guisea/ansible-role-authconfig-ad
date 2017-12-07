@@ -37,12 +37,12 @@
     state: restarted
 
 # messagebus for Cent/RedHat/Amazon
-- name: restart dbus
+- name: restart messagebus
   service:
     name: messagebus
     enabled: yes
     state: restarted
-  when: distro == 'RedHat-6'
+  when: distro == 'RedHat-6' || distro == 'RedHat-5'
 
 # Service is dbus for Cent/RedHat 7
 - name: restart dbus
@@ -59,7 +59,7 @@
     enabled: yes
     state: restarted
 
-- name: restart ssh
+- name: restart sshd
   service:
     name: sshd
     enabled: yes
