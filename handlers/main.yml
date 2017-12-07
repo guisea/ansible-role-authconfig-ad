@@ -67,7 +67,8 @@
   when: ansible_os_family == 'RedHat'
 
 - name: restart logind
-  service: systemd-logind
+  service: 
+    name: systemd-logind
     enabled: yes
     state: restarted
   when: distro == 'RedHat-7'
