@@ -1,0 +1,10 @@
+---
+# Cent/EL5-specific variables
+authconfig_packages:
+  - 'adcli'
+  - 'sssd' 
+  - 'krb5-workstation'
+  - 'pam_krb5'
+  - 'authconfig'
+  - 'samba-common'
+  - 'nscd'
