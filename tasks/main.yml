@@ -3,11 +3,13 @@
 - set_fact:
     ansible_distribution_major_version=6
   when: ansible_distribution == "Amazon"
+  tags: always
 - set_fact:
     distro: "{{ansible_os_family}}-{{ansible_distribution_major_version}}"
   tags:
     - aad_adjoin
     - aad_sssd
+    - always
 #- set_fact:
 #    distro: "{{ansible_lsb.id}}-{{ansible_lsb.major_release}}"
 #  when: ansible_lsb is defined
@@ -32,10 +34,10 @@
     - aad_adjoin
     - aad_sssd    
 
-- include_tasks: redhat.yml
+- import_tasks: redhat.yml
   when: ansible_os_family == 'RedHat'
 
-- include_tasks: ubuntu.yml
+- import_tasks: ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
 
 # Common files between the dists
