@@ -28,8 +28,9 @@
     line:   '# \1'
     backrefs: yes
     state: present
-  notify: restart ssh
-  notify: restart sshd
+  notify: 
+    - restart ssh
+    - restart sshd
 
 - name: restart sssd
   service:
