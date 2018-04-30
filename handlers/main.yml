@@ -61,7 +61,7 @@
     enabled: yes
     state: restarted
 
-- name: restart sshd
+- name: restart ssh
   service:
     name: sshd
     enabled: yes
