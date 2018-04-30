@@ -81,7 +81,9 @@
     owner: root
     group: root
     mode: 0644
-  notify: restart ssh
+  notify: 
+    - restart ssh
+    - restart sshd
   tags:
     - aad_ssh
     - aad_sssd
@@ -91,7 +93,9 @@
     dest: /etc/ssh/sshd_config
     line: 'Banner /etc/ssh/issue'
     regexp: '^(#|)Banner\ .*'
-  notify: restart ssh
+  notify: 
+    - restart ssh
+    - restart sshd
   tags:
     - aad_ssh
     - aad_sssd
@@ -101,7 +105,9 @@
     dest: /etc/ssh/sshd_config
     line: 'PasswordAuthentication yes'
     regexp: '^(#|)PasswordAuthentication\ .*'
-  notify: restart ssh
+  notify: 
+    - restart ssh
+    - restart sshd
   tags:
     - aad_ssh
     - aad_sssd
@@ -111,7 +117,9 @@
     dest: /etc/ssh/sshd_config
     line: 'PasswordAuthentication no'
     state: absent
-  notify: restart ssh
+  notify: 
+    - restart ssh
+    - restart sshd
   tags:
     - aad_ssh
     - aad_sssd
