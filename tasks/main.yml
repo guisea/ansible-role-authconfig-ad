@@ -1,17 +1,27 @@
 ---
 # tasks file for authconfig
 - set_fact:
-    distro: "{{ansible_lsb.id}}-{{ansible_lsb.major_release}}"
-  when: ansible_lsb.description is defined
-  tags:
-    - aad_adjoin
-    - aad_sssd
+    ansible_distribution_major_version=6
+  when: ansible_distribution == "Amazon"
+  tags: always
 - set_fact:
-    distro: "{{ansible_distribution}}-{{ansible_distribution_major_version}}"
-  when: ansible_lsb.description is undefined
+    distro: "{{ansible_os_family}}-{{ansible_distribution_major_version}}"
   tags:
     - aad_adjoin
     - aad_sssd
+    - always
+#- set_fact:
+#    distro: "{{ansible_lsb.id}}-{{ansible_lsb.major_release}}"
+#  when: ansible_lsb is defined
+#  tags:
+#    - aad_adjoin
+#    - aad_sssd
+#- set_fact:
+#    distro: "{{ansible_distribution}}-{{ansible_distribution_major_version}}"
+#  when: ansible_lsb is undefined
+#  tags:
+#    - aad_adjoin
+#    - aad_sssd
 
 # load version-specific variables
 - block:
@@ -24,10 +34,10 @@
     - aad_adjoin
     - aad_sssd    
 
-- include: redhat.yml
-  when: ansible_os_family == "RedHat" or ansible_distribution == "Amazon"
+- import_tasks: redhat.yml
+  when: ansible_os_family == 'RedHat'
 
-- include: ubuntu.yml
+- import_tasks: ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
 
 # Common files between the dists
@@ -71,7 +81,9 @@
     owner: root
     group: root
     mode: 0644
-  notify: restart ssh
+  notify: 
+    - restart ssh
+    - restart sshd
   tags:
     - aad_ssh
     - aad_sssd
@@ -81,7 +93,9 @@
     dest: /etc/ssh/sshd_config
     line: 'Banner /etc/ssh/issue'
     regexp: '^(#|)Banner\ .*'
-  notify: restart ssh
+  notify: 
+    - restart ssh
+    - restart sshd
   tags:
     - aad_ssh
     - aad_sssd
@@ -91,7 +105,9 @@
     dest: /etc/ssh/sshd_config
     line: 'PasswordAuthentication yes'
     regexp: '^(#|)PasswordAuthentication\ .*'
-  notify: restart ssh
+  notify: 
+    - restart ssh
+    - restart sshd
   tags:
     - aad_ssh
     - aad_sssd
@@ -101,7 +117,9 @@
     dest: /etc/ssh/sshd_config
     line: 'PasswordAuthentication no'
     state: absent
-  notify: restart ssh
+  notify: 
+    - restart ssh
+    - restart sshd
   tags:
     - aad_ssh
     - aad_sssd

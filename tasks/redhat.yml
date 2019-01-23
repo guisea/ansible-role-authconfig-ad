@@ -8,11 +8,6 @@
     - aad_sssd
 
 #   shell: "echo -n '{{ hostvars['localhost']['authconfig_sssd_pass'] }}' | adcli join --stdin-password --domain-ou={{ authconfig_computer_ou }} --login-user={{ hostvars['localhost']['authconfig_sssd_name'] }} {{ authconfig_domain }}"
-- name: Clear krb5.keytab
-  file:
-    dest: /etc/krb5.keytab
-    state: absent
-  when: authconfig_clone
 
 - name: Join Domain
   shell: "echo -n '{{ authconfig_sssd_pass }}' | adcli join --stdin-password --domain-ou={{ authconfig_computer_ou }} --login-user={{ authconfig_sssd_name }} -S  {{ad_info.ad_server}} {{ authconfig_domain }}"
@@ -45,7 +40,7 @@
     - "restart sssd"
     - "restart dbus"
     - "restart oddjob"
-    - "restart systemd-logind"
+    - "restart logind"
   tags:
     - aad_authconfig
     - aad_sssd
