@@ -1,24 +1,26 @@
 ---
 # tasks file for authconfig
 - set_fact:
-    ansible_distribution_major_version=6
-  when: ansible_distribution == "Amazon"
-  tags: always
+    distro: "{{ansible_lsb.id}}-{{ansible_lsb.major_release}}"
+  when: ansible_lsb.description is defined
+  tags:
+    - aad_adjoin
+    - aad_sssd
 - set_fact:
     distro: "{{ansible_os_family}}-{{ansible_distribution_major_version}}"
   tags:
     - aad_adjoin
     - aad_sssd
-    - always
-#- set_fact:
+
+# - set_fact:
 #    distro: "{{ansible_lsb.id}}-{{ansible_lsb.major_release}}"
-#  when: ansible_lsb is defined
+#  when: ansible_lsb.description is defined
 #  tags:
 #    - aad_adjoin
 #    - aad_sssd
 #- set_fact:
 #    distro: "{{ansible_distribution}}-{{ansible_distribution_major_version}}"
-#  when: ansible_lsb is undefined
+#  when: ansible_lsb.description is undefined
 #  tags:
 #    - aad_adjoin
 #    - aad_sssd
@@ -81,7 +83,7 @@
     owner: root
     group: root
     mode: 0644
-  notify: 
+  notify:
     - restart ssh
     - restart sshd
   tags:
@@ -93,7 +95,7 @@
     dest: /etc/ssh/sshd_config
     line: 'Banner /etc/ssh/issue'
     regexp: '^(#|)Banner\ .*'
-  notify: 
+  notify:
     - restart ssh
     - restart sshd
   tags:
@@ -105,7 +107,7 @@
     dest: /etc/ssh/sshd_config
     line: 'PasswordAuthentication yes'
     regexp: '^(#|)PasswordAuthentication\ .*'
-  notify: 
+  notify:
     - restart ssh
     - restart sshd
   tags:
@@ -117,7 +119,7 @@
     dest: /etc/ssh/sshd_config
     line: 'PasswordAuthentication no'
     state: absent
-  notify: 
+  notify:
     - restart ssh
     - restart sshd
   tags:
