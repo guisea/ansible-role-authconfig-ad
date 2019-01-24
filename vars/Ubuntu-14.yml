@@ -12,3 +12,5 @@ authconfig_packages:
   - libpam-sss
   - libnss-sss
   - openssh-server
+
+authconfig_ssh_daemon: ssh

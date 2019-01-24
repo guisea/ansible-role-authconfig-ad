@@ -10,3 +10,5 @@ authconfig_packages:
   - 'authconfig'
   - 'samba-common'
   - 'nscd'
+
+authconfig_ssh_daemon: sshd
