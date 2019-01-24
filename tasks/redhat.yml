@@ -27,16 +27,6 @@
     - aad_authconfig
     - aad_sssd
 
-# PAM module to auto-create home directories
-- name: mkhomedir
-  template:
-    dest: '/usr/share/pam-configs/mkhomedir'
-    src: 'mkhomedir.j2'
-    owner: 'root'
-    group: 'root'
-    mode: 0644
-  notify: pam-auth-update
-
 # Note that we are not using --savebackup here. For some reason it causes several other options to stop working.
 # --nostart is used because we don't have the template files created for krb5.conf and sssd.conf yet.
 - name: authconfig
