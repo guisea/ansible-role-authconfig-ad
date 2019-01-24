@@ -8,6 +8,7 @@
     - aad_sssd
 - set_fact:
     distro: "{{ansible_os_family}}-{{ansible_distribution_major_version}}"
+  when: ansible_lsb.description is not defined
   tags:
     - aad_adjoin
     - aad_sssd
