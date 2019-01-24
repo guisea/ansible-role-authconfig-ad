@@ -36,10 +36,10 @@
     - aad_adjoin
     - aad_sssd    
 
-- import_tasks: redhat.yml
+- include_tasks: redhat.yml
   when: ansible_os_family == 'RedHat'
 
-- import_tasks: ubuntu.yml
+- include_tasks: ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
 
 # Common files between the dists
