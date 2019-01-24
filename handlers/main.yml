@@ -71,26 +71,12 @@
     name: oddjobd
     enabled: yes
     state: restarted
-  vars:
-    ansible_command_timeout: 30
-
-- name: restart sshd
-  service:
-    name: sshd
-    enabled: yes
-    state: restarted
-  vars:
-    ansible_command_timeout: 30
-  when: ansible_os_family == 'RedHat'
 
 - name: restart ssh
   service:
-    name: ssh
+    name: "{{ authconfig_ssh_daemon }}"
     enabled: yes
     state: restarted
-  vars:
-    ansible_command_timeout: 30
-  when: ansible_distribution == 'Ubuntu'
 
 - name: pam-auth-update
   vars:
