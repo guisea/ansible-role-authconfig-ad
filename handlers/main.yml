@@ -54,6 +54,17 @@
     state: restarted
   when: ansible_distribution == 'Ubuntu' or distro == 'RedHat-7'
 
+# When dbus is restarted (Kicks systemd-logind off the bus)
+# needs to be restarted to allow privilege escalation and logins
+# to be timely.
+- name: restart logind
+  service:
+    name: systemd-logind
+    enabled: yes
+    state: restarted
+  vars:
+    ansible_command_timeout: 30
+  when: distro == 'RedHat-7'
 
 - name: restart oddjob
   service:
@@ -71,15 +82,6 @@
   vars:
     ansible_command_timeout: 30
   when: ansible_os_family == 'RedHat'
-
-- name: restart logind
-  service: 
-    name: systemd-logind
-    enabled: yes
-    state: restarted
-  vars:
-    ansible_command_timeout: 30
-  when: distro == 'RedHat-7'
 
 - name: restart ssh
   service:
