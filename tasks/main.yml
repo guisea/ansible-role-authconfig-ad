@@ -85,7 +85,6 @@
     mode: 0644
   notify:
     - restart ssh
-    - restart sshd
   tags:
     - aad_ssh
     - aad_sssd
@@ -97,7 +96,6 @@
     regexp: '^(#|)Banner\ .*'
   notify:
     - restart ssh
-    - restart sshd
   tags:
     - aad_ssh
     - aad_sssd
@@ -109,7 +107,6 @@
     regexp: '^(#|)PasswordAuthentication\ .*'
   notify:
     - restart ssh
-    - restart sshd
   tags:
     - aad_ssh
     - aad_sssd
@@ -121,7 +118,6 @@
     state: absent
   notify:
     - restart ssh
-    - restart sshd
   tags:
     - aad_ssh
     - aad_sssd
