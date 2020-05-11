@@ -15,7 +15,4 @@ galaxy_info:
     - trusty
   categories:
   - system
-dependencies:
-  - src: https://github.com/mGageTechOps/ansible-role-plugin-lookup-consul
-    name: ansible-role-plugin-lookup-consul
-    version: 0.0.1
+dependencies: []
