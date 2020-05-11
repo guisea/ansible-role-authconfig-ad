@@ -9,6 +9,15 @@
 
 #   shell: "echo -n '{{ hostvars['localhost']['authconfig_sssd_pass'] }}' | adcli join --stdin-password --domain-ou={{ authconfig_computer_ou }} --login-user={{ hostvars['localhost']['authconfig_sssd_name'] }} {{ authconfig_domain }}"
 
+- name: Clear Previous Auth
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /etc/krb5.keytab
+    - /var/lib/authconfig/backup-pre-authconfig-adcli
+  when: authconfig_clone
+  
 - name: Join Domain
   shell: "echo -n '{{ authconfig_sssd_pass }}' | adcli join --stdin-password --domain-ou={{ authconfig_computer_ou }} --login-user={{ authconfig_sssd_name }} -S  {{ad_info.ad_server}} {{ authconfig_domain }}"
   args:
